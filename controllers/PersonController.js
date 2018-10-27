@@ -50,7 +50,9 @@ module.exports = {
   },
   async delete(req, res) {
     try {
-      let person = await Persons.findOneAndRemove({ _id : req.body._id})
+      console.log('params')
+      console.log(req.query[0])
+      let person = await Persons.findOneAndRemove({ _id : req.query[0]})
       if(!person) {
         return res.status(404).send('Not Found')
       } else {
