@@ -13,7 +13,6 @@ module.exports = {
   },
   async post(req, res) {
     try {
-      console.log(req.body)
       var person = new Persons({ 
         _name: req.body._name,
         _avatar: req.body._avatar
@@ -21,7 +20,6 @@ module.exports = {
       var newPerson = await person.save()
       res.status(200).send({response: 'Person added'})
     } catch (err) {
-      console.log(err)
       res.status(500).send({
         error: "An error has ocurred"
       });
@@ -29,20 +27,17 @@ module.exports = {
   },
   async put(req, res) {
     try {
-      console.log(req.body)
       objUpdate = {}
       if(req.body._name){objUpdate._name=req.body._name}
       if(req.body._avatar){objUpdate._avatar=req.body._avatar}
-      console.log(objUpdate)
       let person = await Persons.findOneAndUpdate({ _id : req.body._id}, objUpdate)
-      console.log(person)
+      // ({ _id : req.body._id}, objUpdate)
       if(!person) {
         return res.status(404).send('Not Found')
       } else {
         return res.status(200).send({response: 'Updated'})
       }
     } catch (err) {
-      console.log(err)
       res.status(500).send({
         error: "An error has ocurred"
       });
@@ -50,8 +45,6 @@ module.exports = {
   },
   async delete(req, res) {
     try {
-      console.log('params')
-      console.log(req.query[0])
       let person = await Persons.findOneAndRemove({ _id : req.query[0]})
       if(!person) {
         return res.status(404).send('Not Found')
@@ -59,7 +52,6 @@ module.exports = {
         return res.status(200).send({response: 'Deleted'})
       }
     } catch (err) {
-      console.log(err)
       res.status(500).send({
         error: "An error has ocurred"
       });
